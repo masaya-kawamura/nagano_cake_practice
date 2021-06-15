@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+
+  namespace :admin do
+    get 'items/index'
+    get 'items/new'
+    get 'items/create'
+    get 'items/show'
+    get 'items/edit'
+    get 'items/update'
+  end
   #管理者側の認証用ルーティング
   devise_for :admins, controllers: {
     sessions: 'admins/sessions',
@@ -21,9 +30,10 @@ Rails.application.routes.draw do
   }
 
   #会員側のページ
-  namespace :public do
-    resources :customer
-    get 'top' => 'homes#top'
+  scope module: :public do
+    resources :customers
+    resources :items
+    root to: 'homes#top'
     get 'about' => 'homes#about'
   end
 
